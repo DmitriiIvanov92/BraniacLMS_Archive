@@ -1,8 +1,7 @@
 <body>
-
-  <!-- Вынесли шапку в отдельный файл main_menu -->
+  <!-- Вынесли шапку меню в отдельный файл templates-> includes - main_menu.html -->
   {% include 'includes/main_menu.html' %}
-
+  <!-- БАЗОВЫЙ ШАБЛОН, ОТЛИЧИЕ ЗАПИСЫВАЕМ {% block content} {% endblock content}  -->
   <div class="container-md">
 
     {% block content %}
