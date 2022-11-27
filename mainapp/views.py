@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.views.generic import TemplateView
 
 
@@ -16,6 +18,7 @@ class NewsPageView(TemplateView):
         context["news_preview"] = "Предварительное описание, которое заинтересует каждого"
         # Добавили возможность генерировать карточки на странице news.html
         context["range"] = range(1, 6)
+        context["datetime_obj"] = datetime.now()
         return context
 
 
