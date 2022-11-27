@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Прописали новое приложение mainapp
     "mainapp",
 ]
 
@@ -125,6 +126,7 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Добавили путь до папки "static":
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
