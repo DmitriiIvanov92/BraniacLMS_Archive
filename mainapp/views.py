@@ -15,7 +15,7 @@ class NewsPageView(TemplateView):
         context["news_title"] = "Громкий новостной заголовок"
         context["news_preview"] = "Предварительное описание, которое заинтересует каждого"
         # Добавили возможность генерировать карточки на странице news.html
-        context["range"] = range(5)
+        context["range"] = range(1, 6)
         return context
 
 
