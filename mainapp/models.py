@@ -56,6 +56,7 @@ class Lesson(models.Model):
     class Meta:
         ordering = ("course", "num")
 
+
 class CourseTeachers(models.Model):
     course = models.ManyToManyField(Courses)
     name_first = models.CharField(max_length=128, verbose_name="Name")
