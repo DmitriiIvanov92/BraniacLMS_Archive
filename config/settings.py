@@ -39,8 +39,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # добавили новое приложение для разметки markdownify
     "markdownify.apps.MarkdownifyConfig",
+    # Регистрация через социальную сеть
+    # pip install social-auth-app-django
+    # прописываем новое приложение
+    "social_django",
     # Прописали новое приложение mainapp
     "mainapp",
+    # Приложение для авторизации:
+    "authapp",
 ]
 
 MIDDLEWARE = [
@@ -59,7 +65,6 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            # Добавили путь к общей папке для общих шаблонов
             "templates",
         ],
         "APP_DIRS": True,
@@ -67,8 +72,13 @@ TEMPLATES = [
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
+                "django.template.context_processors.media",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # Контекстный процессор для social_django: backends and login_redirect
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
+                # Контекстный процессор: можно через него передавать инфу в шаблоны
                 "mainapp.context_processors.example.simple_context_processor",
             ],
         },
@@ -107,6 +117,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Django использовать наш новый пользовательский модель пользователя вместо встроенной модели User:
+AUTH_USER_MODEL = "authapp.CustomUser"
+
+# Авторизация для BACKEND - в данному случае OAuth2 для GITHUB:
+AUTHENTICATION_BACKENDS = (
+    "social_core.backends.github.GithubOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+
+SOCIAL_AUTH_GITHUB_KEY = "d28a5ad6012a87aead05"
+SOCIAL_AUTH_GITHUB_SECRET = "a5ee360b83c5e5d1485be70b51352ff1bee8bd6d"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -136,3 +158,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+
+# Media files добавили путь до медиа файлов
+MEDIA_URL = "/media/"
+
+MEDIA_ROOT = BASE_DIR / "media"
+
+# Переадресация при успешном входе и выходе в лк:
+LOGIN_REDIRECT_URL = "mainapp:main_page"
+LOGOUT_REDIRECT_URL = "mainapp:main_page"
+
+
+# Хранит информацию сообщения в рамках одной сессии (вход-выход, до перезагрузки):
+# Можно так же указать куки: 'django.contrib.messages.storage.session.CookieStorage'
+MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
